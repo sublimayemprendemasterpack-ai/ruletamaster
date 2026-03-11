@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- ============================================================
+       META Y CONFIGURACIÓN BÁSICA
+       Aquí puedes cambiar el título de la pestaña del navegador
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎰 Ruleta de Descuentos - Master Pack Sublima & Emprende</title>
+
+  <!-- ============================================================
+       FUENTES DE GOOGLE
+       Aquí puedes cambiar la tipografía de toda la página
+       Actual: Bangers (títulos llamativos) + Nunito (cuerpo legible)
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Hoja de estilos externa -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       PARTÍCULAS DE FONDO (decorativas, generadas por JS)
+       ============================================================ -->
+  <div id="particulas-fondo"></div>
+
+  <!-- ============================================================
+       CONTENEDOR PRINCIPAL DE LA PÁGINA
+       ============================================================ -->
+  <main class="contenedor-principal">
+
+    <!-- ----------------------------------------------------------
+         CABECERA / ENCABEZADO
+         Aquí puedes cambiar el logo, título y subtítulo
+         ---------------------------------------------------------- -->
+    <header class="cabecera">
+      <!-- Icono emoji del encabezado — cámbialo si quieres otro símbolo -->
+      <div class="logo-emoji">🎁</div>
+
+      <!-- Título principal — cambia este texto según tu marca -->
+      <h1 class="titulo-principal">¡GIRA Y GANA!</h1>
+
+      <!-- Subtítulo descriptivo — personaliza con el nombre de tu producto -->
+      <p class="subtitulo">
+        Descuentos exclusivos para el<br />
+        <strong>Master Pack Sublima &amp; Emprende</strong>
+      </p>
+
+      <!-- Contador de urgencia — puedes cambiar el número o quitar este bloque -->
+      <div class="badge-urgencia">
+        🔥 Solo quedan <span id="contador-ofertas">7</span> descuentos disponibles hoy
+      </div>
+    </header>
+
+    <!-- ----------------------------------------------------------
+         SECCIÓN CENTRAL: RULETA + CONTROLES
+         ---------------------------------------------------------- -->
+    <section class="seccion-ruleta">
+
+      <!-- Flecha indicadora que señala el premio ganador -->
+      <!-- Puedes cambiar la posición de la flecha editando CSS (.flecha-indicadora) -->
+      <div class="flecha-indicadora" id="flecha">▼</div>
+
+      <!-- Contenedor del canvas donde se dibuja la ruleta (JS la pinta) -->
+      <div class="contenedor-canvas">
+        <canvas id="canvas-ruleta" width="360" height="360"></canvas>
+        <!-- Botón central decorativo sobre la ruleta -->
+        <div class="boton-central-ruleta">SPIN</div>
+      </div>
+
+      <!-- ----------------------------------------------------------
+           BOTONES DE ACCIÓN
+           - boton-girar: botón principal para girar la ruleta
+           - boton-whatsapp: aparece después de ganar (oculto al inicio)
+           ---------------------------------------------------------- -->
+      <div class="zona-botones">
+
+        <!-- Botón GIRAR — cambia el texto del botón aquí si lo deseas -->
+        <button id="boton-girar" class="btn-girar" onclick="girarRuleta()">
+          <span class="btn-icon">🎰</span>
+          <span class="btn-texto">¡GIRAR Y GANAR!</span>
+        </button>
+
+        <!-- Botón WhatsApp — oculto hasta que la ruleta se detiene -->
+        <!-- ⚠️ IMPORTANTE: Cambia el número de teléfono en script.js (variable WHATSAPP_NUMERO) -->
+        <a id="boton-whatsapp"
+           class="btn-whatsapp oculto"
+           href="#"
+           target="_blank"
+           rel="noopener noreferrer">
+          <!-- Icono SVG de WhatsApp (no requiere librería externa) -->
+          <svg class="icono-whatsapp" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          <span>RECLAMAR MI DESCUENTO POR WHATSAPP</span>
+        </a>
+
+      </div><!-- /zona-botones -->
+
+      <!-- Texto de confianza debajo de los botones -->
+      <p class="texto-confianza">
+        🔒 100% seguro · ✅ Sin tarjeta requerida · ⚡ Respuesta inmediata
+      </p>
+
+    </section><!-- /seccion-ruleta -->
+
+
+    <!-- ----------------------------------------------------------
+         SECCIÓN DE PRUEBA SOCIAL / TESTIMONIOS
+         Aquí puedes editar los nombres y premios ganados por otros usuarios
+         ---------------------------------------------------------- -->
+    <section class="seccion-social">
+      <h3 class="titulo-social">🏆 Ganadores Recientes</h3>
+      <div class="lista-ganadores" id="lista-ganadores">
+        <!-- Los ítems se generan dinámicamente desde script.js (array GANADORES_RECIENTES) -->
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------
+         PIE DE PÁGINA
+         Cambia el nombre de la empresa o año si es necesario
+         ---------------------------------------------------------- -->
+    <footer class="pie-pagina">
+      <p>© 2026 Master Pack Sublima &amp; Emprende · Todos los derechos reservados</p>
+      <p class="terminos">*Los descuentos aplican según términos y condiciones. Válidos por 24 horas.</p>
+    </footer>
+
+  </main><!-- /contenedor-principal -->
+
+
+  <!-- ============================================================
+       MODAL DE PREMIO GANADO
+       Se muestra automáticamente cuando la ruleta se detiene
+       ============================================================ -->
+  <div id="modal-premio" class="modal-overlay oculto" role="dialog" aria-modal="true" aria-labelledby="titulo-modal">
+
+    <div class="modal-caja">
+
+      <!-- Botón para cerrar el modal (X) -->
+      <button class="modal-cerrar" onclick="cerrarModal()" aria-label="Cerrar">✕</button>
+
+      <!-- Animación de trofeo / celebración -->
+      <div class="modal-trofeo">🏆</div>
+
+      <!-- Títulos del modal — el texto dinámico lo inserta JavaScript -->
+      <h2 id="titulo-modal" class="modal-titulo">¡FELICIDADES!</h2>
+      <p class="modal-subtitulo">Has ganado:</p>
+
+      <!-- Aquí JavaScript inserta el premio ganado (ej: "30% OFF") -->
+      <div class="modal-premio" id="modal-texto-premio">--</div>
+
+      <!-- Descripción del premio -->
+      <p class="modal-descripcion">
+        para el <strong>Master Pack Sublima &amp; Emprende</strong>.<br />
+        ¡Reclámalo ahora por WhatsApp antes de que expire!
+      </p>
+
+      <!-- Temporizador de urgencia dentro del modal -->
+      <div class="modal-temporizador">
+        ⏳ Expira en: <strong id="temporizador">10:00</strong>
+      </div>
+
+      <!-- Botón WhatsApp dentro del modal (enlace dinámico generado por JS) -->
+      <a id="modal-boton-whatsapp" class="btn-whatsapp-modal" href="#" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        RECLAMAR MI DESCUENTO AHORA
+      </a>
+
+      <!-- Botón secundario para cerrar y ver la página -->
+      <button class="modal-ver-despues" onclick="cerrarModal()">
+        Ver más tarde
+      </button>
+
+    </div><!-- /modal-caja -->
+  </div><!-- /modal-premio -->
+
+
+  <!-- ============================================================
+       CONTENEDOR DE CONFETI (generado por JS)
+       ============================================================ -->
+  <div id="confeti-contenedor"></div>
+
+  <!-- Script principal (toda la lógica de la ruleta) -->
+  <script src="script.js"></script>
+
+</body>
+</html>

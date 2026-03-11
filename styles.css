@@ -1,0 +1,813 @@
+/* ================================================================
+   RULETA DE DESCUENTOS — HOJA DE ESTILOS PRINCIPAL
+   Archivo: styles.css
+   Estilo: Temu / AliExpress (vibrante, naranja, rojo, amarillo)
+   ================================================================ */
+
+
+/* ================================================================
+   1. VARIABLES GLOBALES DE DISEÑO
+   🎨 AQUÍ PUEDES CAMBIAR LOS COLORES PRINCIPALES DEL SITIO
+   ================================================================ */
+:root {
+  /* Paleta de colores principal */
+  --color-primario:      #FF4500;   /* Naranja-rojo vibrante (estilo Temu) */
+  --color-secundario:    #FF8C00;   /* Naranja cálido */
+  --color-acento:        #FFD700;   /* Amarillo dorado */
+  --color-acento-suave:  #FFF176;   /* Amarillo claro */
+  --color-fondo:         #1A0A00;   /* Fondo oscuro con tono rojizo */
+  --color-fondo-card:    #2D1500;   /* Fondo de tarjetas */
+  --color-texto:         #FFFFFF;   /* Texto principal blanco */
+  --color-texto-suave:   #FFD0A0;   /* Texto secundario suave */
+  --color-whatsapp:      #25D366;   /* Verde WhatsApp oficial */
+  --color-whatsapp-dark: #128C7E;   /* Verde oscuro hover WhatsApp */
+
+  /* Tipografías */
+  --fuente-display:   'Bangers', cursive;       /* Títulos grandes y llamativos */
+  --fuente-cuerpo:    'Nunito', sans-serif;      /* Texto legible */
+
+  /* Bordes y radios */
+  --radio-card:       16px;
+  --radio-boton:      50px;
+
+  /* Sombras */
+  --sombra-naranja:   0 0 30px rgba(255, 69, 0, 0.6);
+  --sombra-dorada:    0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+
+/* ================================================================
+   2. RESET Y BASE GLOBAL
+   ================================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--fuente-cuerpo);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* Fondo con patrón de puntos decorativos */
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 69, 0, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 140, 0, 0.15) 0%, transparent 50%);
+}
+
+
+/* ================================================================
+   3. PARTÍCULAS DECORATIVAS DE FONDO
+   Pequeños círculos animados generados por JavaScript
+   ================================================================ */
+#particulas-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;  /* No interfieren con clics */
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Cada partícula individual (clase asignada por JS) */
+.particula {
+  position: absolute;
+  border-radius: 50%;
+  animation: flotar linear infinite;
+  opacity: 0.4;
+}
+
+/* ============================================================
+   ANIMACIÓN: flotar — hace que las partículas suban y desaparezcan
+   ============================================================ */
+@keyframes flotar {
+  0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0.6; }
+  100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+
+/* ================================================================
+   4. CONTENEDOR PRINCIPAL
+   ================================================================ */
+.contenedor-principal {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;        /* Ancho máximo en desktop */
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+
+/* ================================================================
+   5. CABECERA / ENCABEZADO
+   🖊️ AQUÍ PUEDES CAMBIAR TEXTOS DEL TÍTULO Y SUBTÍTULO
+   ================================================================ */
+.cabecera {
+  text-align: center;
+  padding: 20px 16px 0;
+  width: 100%;
+}
+
+/* Emoji grande del logo */
+.logo-emoji {
+  font-size: 56px;
+  display: block;
+  animation: latido 1.2s ease-in-out infinite;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   ANIMACIÓN: latido — escala el emoji suavemente
+   ============================================================ */
+@keyframes latido {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.12); }
+}
+
+/* Título principal con tipografía Bangers */
+.titulo-principal {
+  font-family: var(--fuente-display);
+  font-size: clamp(48px, 12vw, 72px);  /* Responsivo: mínimo 48px, máximo 72px */
+  letter-spacing: 4px;
+  line-height: 1;
+  /* Degradado de texto naranja → amarillo → rojo */
+  background: linear-gradient(135deg, #FFD700 0%, #FF8C00 50%, #FF4500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  /* Sombra con pseudo-efecto (usa filtro en el contenedor) */
+  filter: drop-shadow(0 4px 12px rgba(255, 140, 0, 0.6));
+  margin-bottom: 8px;
+}
+
+/* Subtítulo descriptivo */
+.subtitulo {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--color-texto-suave);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.subtitulo strong {
+  color: var(--color-acento);
+  font-weight: 900;
+}
+
+/* Badge rojo de urgencia (contador de ofertas) */
+.badge-urgencia {
+  display: inline-block;
+  background: linear-gradient(135deg, #FF4500, #CC0000);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 50px;
+  box-shadow: var(--sombra-naranja);
+  animation: pulso 2s ease-in-out infinite;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   ANIMACIÓN: pulso — hace que el badge parpadee suavemente
+   ============================================================ */
+@keyframes pulso {
+  0%, 100% { box-shadow: 0 0 12px rgba(255, 69, 0, 0.5); }
+  50%       { box-shadow: 0 0 28px rgba(255, 69, 0, 0.9); }
+}
+
+
+/* ================================================================
+   6. SECCIÓN DE LA RULETA
+   ================================================================ */
+.seccion-ruleta {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ---- FLECHA INDICADORA ---- */
+/* 🔧 Cambia el color o tamaño de la flecha que señala el premio aquí */
+.flecha-indicadora {
+  font-size: 36px;
+  color: var(--color-acento);
+  filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.8));
+  animation: rebotar 0.8s ease-in-out infinite;
+  z-index: 10;
+  /* Se superpone sobre el canvas */
+  margin-bottom: -16px;
+}
+
+/* ============================================================
+   ANIMACIÓN: rebotar — la flecha sube y baja
+   ============================================================ */
+@keyframes rebotar {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(6px); }
+}
+
+/* ---- CONTENEDOR DEL CANVAS (RULETA) ---- */
+.contenedor-canvas {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  /* Halo brillante alrededor de la ruleta */
+  filter: drop-shadow(0 0 24px rgba(255, 140, 0, 0.5));
+  /* Animación de entrada al cargar */
+  animation: aparecer 0.8s ease-out both;
+}
+
+/* ============================================================
+   ANIMACIÓN: aparecer — la ruleta aparece con escala desde 0
+   ============================================================ */
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1);   }
+}
+
+/* El canvas HTML5 donde se dibuja la ruleta */
+#canvas-ruleta {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#canvas-ruleta:hover {
+  transform: scale(1.02);
+}
+
+/* Botón decorativo central sobre la ruleta */
+.boton-central-ruleta {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  background: radial-gradient(circle, #FFD700, #FF8C00);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fuente-display);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--color-fondo);
+  font-weight: bold;
+  box-shadow: 0 0 0 4px #FF4500, 0 0 0 8px rgba(255,215,0,0.3), 0 6px 20px rgba(0,0,0,0.4);
+  pointer-events: none; /* No captura clics */
+  z-index: 5;
+}
+
+
+/* ================================================================
+   7. ZONA DE BOTONES
+   ================================================================ */
+.zona-botones {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ---- BOTÓN PRINCIPAL: GIRAR ---- */
+/* 🎨 Cambia colores, tamaño o texto del botón GIRAR aquí */
+.btn-girar {
+  width: 100%;
+  max-width: 360px;
+  padding: 18px 24px;
+  font-family: var(--fuente-display);
+  font-size: clamp(22px, 5vw, 28px);
+  letter-spacing: 2px;
+  color: var(--color-fondo);
+  background: linear-gradient(135deg, #FFD700 0%, #FF8C00 50%, #FF4500 100%);
+  border: none;
+  border-radius: var(--radio-boton);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow:
+    0 6px 24px rgba(255, 69, 0, 0.5),
+    0 2px 0 rgba(0,0,0,0.3) inset;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de brillo que cruza el botón */
+.btn-girar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: brillo-boton 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   ANIMACIÓN: brillo-boton — destello que cruza el botón
+   ============================================================ */
+@keyframes brillo-boton {
+  0%   { left: -100%; }
+  50%  { left: 150%; }
+  100% { left: 150%; }
+}
+
+.btn-girar:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(255, 69, 0, 0.7);
+}
+
+.btn-girar:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Estado DESHABILITADO del botón (después de girar) */
+.btn-girar:disabled {
+  opacity: 0;
+  pointer-events: none;
+  cursor: not-allowed;
+  transform: scale(0.9);
+}
+
+.btn-icon {
+  font-size: 28px;
+}
+
+/* ---- BOTÓN WHATSAPP ---- */
+/* 🟢 Cambia el color o estilo del botón de WhatsApp aquí */
+.btn-whatsapp {
+  width: 100%;
+  max-width: 360px;
+  padding: 18px 24px;
+  font-family: var(--fuente-cuerpo);
+  font-size: clamp(14px, 3.5vw, 16px);
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  border: none;
+  border-radius: var(--radio-boton);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow:
+    0 6px 24px rgba(37, 211, 102, 0.5),
+    0 2px 0 rgba(0,0,0,0.2) inset;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  animation: aparecer-whatsapp 0.5s ease-out both;
+}
+
+/* ============================================================
+   ANIMACIÓN: aparecer-whatsapp — el botón verde aparece desde abajo
+   ============================================================ */
+@keyframes aparecer-whatsapp {
+  from { opacity: 0; transform: translateY(20px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.btn-whatsapp:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 32px rgba(37, 211, 102, 0.7);
+}
+
+.btn-whatsapp:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.icono-whatsapp {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+/* Clase utilitaria para ocultar elementos */
+.oculto {
+  display: none !important;
+}
+
+/* ---- TEXTO DE CONFIANZA ---- */
+/* 🔧 Edita los íconos y texto de garantía aquí */
+.texto-confianza {
+  font-size: 12px;
+  color: rgba(255, 208, 160, 0.7);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+
+/* ================================================================
+   8. SECCIÓN DE PRUEBA SOCIAL (GANADORES RECIENTES)
+   ================================================================ */
+.seccion-social {
+  width: 100%;
+  background: var(--color-fondo-card);
+  border: 1px solid rgba(255, 140, 0, 0.3);
+  border-radius: var(--radio-card);
+  padding: 16px;
+}
+
+.titulo-social {
+  font-family: var(--fuente-display);
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--color-acento);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+/* Lista de ganadores recientes */
+.lista-ganadores {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Cada fila de ganador (generada por JS) */
+.ganador-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 69, 0, 0.1);
+  border-left: 3px solid var(--color-primario);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--color-texto-suave);
+  /* Cada ítem aparece con un retardo progresivo (asignado por JS con style.animationDelay) */
+  animation: deslizar-izquierda 0.4s ease-out both;
+}
+
+/* ============================================================
+   ANIMACIÓN: deslizar-izquierda — ítem entra desde la derecha
+   ============================================================ */
+@keyframes deslizar-izquierda {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.ganador-avatar {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.ganador-info {
+  flex: 1;
+}
+
+.ganador-nombre {
+  font-weight: 700;
+  color: var(--color-texto);
+  font-size: 13px;
+}
+
+.ganador-premio {
+  font-weight: 900;
+  color: var(--color-acento);
+  font-size: 14px;
+}
+
+.ganador-tiempo {
+  font-size: 11px;
+  color: rgba(255, 208, 160, 0.5);
+  text-align: right;
+  white-space: nowrap;
+}
+
+
+/* ================================================================
+   9. PIE DE PÁGINA
+   ================================================================ */
+.pie-pagina {
+  text-align: center;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.pie-pagina p {
+  font-size: 12px;
+  color: rgba(255, 208, 160, 0.4);
+  line-height: 1.6;
+}
+
+.terminos {
+  font-size: 11px !important;
+  color: rgba(255, 208, 160, 0.25) !important;
+  margin-top: 4px;
+}
+
+
+/* ================================================================
+   10. MODAL DE PREMIO GANADO
+   ================================================================ */
+
+/* Fondo oscuro semitransparente que cubre toda la pantalla */
+.modal-overlay {
+  position: fixed;
+  inset: 0;                /* Equivale a top/right/bottom/left: 0 */
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: aparecer-overlay 0.3s ease-out;
+}
+
+/* ============================================================
+   ANIMACIÓN: aparecer-overlay — fondo modal aparece con fade
+   ============================================================ */
+@keyframes aparecer-overlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Caja principal del modal */
+.modal-caja {
+  background: linear-gradient(160deg, #2D1500 0%, #1A0A00 100%);
+  border: 2px solid var(--color-secundario);
+  border-radius: 24px;
+  padding: 32px 24px 24px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow:
+    0 0 60px rgba(255, 140, 0, 0.4),
+    0 20px 60px rgba(0, 0, 0, 0.6);
+  animation: aparecer-modal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* ============================================================
+   ANIMACIÓN: aparecer-modal — modal entra con "boing" (spring)
+   ============================================================ */
+@keyframes aparecer-modal {
+  from { opacity: 0; transform: scale(0.5) translateY(40px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Botón X de cierre */
+.modal-cerrar {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: var(--color-texto-suave);
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.modal-cerrar:hover {
+  background: rgba(255, 69, 0, 0.4);
+}
+
+/* Emoji/trofeo grande del modal */
+.modal-trofeo {
+  font-size: 64px;
+  display: block;
+  margin-bottom: 8px;
+  animation: girar-trofeo 1s ease-out both;
+}
+
+/* ============================================================
+   ANIMACIÓN: girar-trofeo — el trofeo gira al aparecer
+   ============================================================ */
+@keyframes girar-trofeo {
+  from { transform: rotate(-180deg) scale(0); }
+  to   { transform: rotate(0deg) scale(1); }
+}
+
+/* Título ¡FELICIDADES! */
+.modal-titulo {
+  font-family: var(--fuente-display);
+  font-size: 42px;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.5));
+  margin-bottom: 4px;
+}
+
+.modal-subtitulo {
+  font-size: 15px;
+  color: var(--color-texto-suave);
+  margin-bottom: 8px;
+}
+
+/* Premio ganado (texto grande, ej: "30% OFF") */
+.modal-premio {
+  font-family: var(--fuente-display);
+  font-size: clamp(48px, 15vw, 70px);
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, #FFD700 0%, #FF4500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 4px 16px rgba(255, 69, 0, 0.7));
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.modal-descripcion {
+  font-size: 14px;
+  color: var(--color-texto-suave);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.modal-descripcion strong {
+  color: var(--color-acento);
+}
+
+/* Temporizador de urgencia */
+.modal-temporizador {
+  background: rgba(255, 69, 0, 0.15);
+  border: 1px solid rgba(255, 69, 0, 0.3);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: var(--color-texto);
+  margin-bottom: 16px;
+}
+
+.modal-temporizador strong {
+  color: var(--color-acento);
+  font-size: 18px;
+}
+
+/* Botón WhatsApp dentro del modal */
+.btn-whatsapp-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: var(--radio-boton);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  margin-bottom: 12px;
+}
+
+.btn-whatsapp-modal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.7);
+}
+
+/* Botón secundario "Ver más tarde" */
+.modal-ver-despues {
+  background: none;
+  border: 1px solid rgba(255, 208, 160, 0.3);
+  color: rgba(255, 208, 160, 0.5);
+  font-size: 12px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-ver-despues:hover {
+  background: rgba(255, 208, 160, 0.05);
+  color: rgba(255, 208, 160, 0.8);
+}
+
+
+/* ================================================================
+   11. SISTEMA DE CONFETI
+   ================================================================ */
+#confeti-contenedor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2000;  /* Encima de todo, incluyendo el modal */
+  overflow: hidden;
+}
+
+/* Cada pieza de confeti (generada por JS) */
+.confeti-pieza {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -20px;
+  border-radius: 2px;
+  animation: caer-confeti linear forwards;
+}
+
+/* ============================================================
+   ANIMACIÓN: caer-confeti — las piezas caen rotando
+   Duración y posición inicial son asignadas por JS
+   ============================================================ */
+@keyframes caer-confeti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+
+/* ================================================================
+   12. ESTADO DE GIRO ACTIVO
+   Clase que JavaScript agrega al body mientras la ruleta gira
+   ================================================================ */
+body.girando .btn-girar {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+body.girando #canvas-ruleta {
+  cursor: wait;
+}
+
+
+/* ================================================================
+   13. ANIMACIÓN DE PULSO EN LA RULETA (celebración al ganar)
+   JavaScript agrega la clase .celebrando al canvas
+   ================================================================ */
+#canvas-ruleta.celebrando {
+  animation: celebrar-ruleta 0.3s ease-in-out 4;
+}
+
+@keyframes celebrar-ruleta {
+  0%   { filter: drop-shadow(0 0 24px rgba(255, 215, 0, 0.5)); }
+  50%  { filter: drop-shadow(0 0 48px rgba(255, 215, 0, 1)); transform: scale(1.04); }
+  100% { filter: drop-shadow(0 0 24px rgba(255, 215, 0, 0.5)); }
+}
+
+
+/* ================================================================
+   14. RESPONSIVE — AJUSTES PARA PANTALLAS PEQUEÑAS
+   (La página ya es mobile-first, estos son ajustes finos)
+   ================================================================ */
+
+/* Tabletas y pantallas medianas */
+@media (min-width: 480px) {
+  .contenedor-canvas {
+    width: 420px;
+    height: 420px;
+  }
+}
+
+/* Teléfonos muy pequeños (menos de 360px) */
+@media (max-width: 359px) {
+  .contenedor-canvas {
+    width: 300px;
+    height: 300px;
+  }
+
+  .titulo-principal {
+    font-size: 40px;
+  }
+
+  .modal-caja {
+    padding: 24px 16px 20px;
+  }
+}
