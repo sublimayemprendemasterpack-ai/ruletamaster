@@ -99,10 +99,34 @@ document.addEventListener('DOMContentLoaded', function () {
   /* Crear partículas de fondo decorativas */
   crearParticulas();
 
-  /* Permitir girar también al hacer clic sobre el canvas */
-  document.getElementById('canvas-ruleta').addEventListener('click', function () {
-    if (!estaGirando) girarRuleta();
-  });
+  /* ----------------------------------------------------------------
+     UNA SOLA JUGADA: Si ya jugó antes, mostrar su premio y bloquear.
+     ---------------------------------------------------------------- */
+  const premioGuardado = localStorage.getItem('ruleta_premio_ganado');
+
+  if (premioGuardado !== null) {
+    /* Ya jugó: restaurar estado sin animación */
+    const indiceGuardado = parseInt(premioGuardado, 10);
+
+    const botonGirar = document.getElementById('boton-girar');
+    botonGirar.disabled = true;
+    botonGirar.classList.add('oculto');
+
+    const textoPremio = SECCIONES[indiceGuardado].texto;
+    const mensaje     = generarMensajeWhatsApp(textoPremio);
+    const botonWA     = document.getElementById('boton-whatsapp');
+    botonWA.href      = 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + encodeURIComponent(mensaje);
+    botonWA.classList.remove('oculto');
+
+    lanzarConfeti();
+    mostrarModalPremio(indiceGuardado);
+
+  } else {
+    /* Primera vez: habilitar clic en canvas para girar */
+    document.getElementById('canvas-ruleta').addEventListener('click', function () {
+      if (!estaGirando) girarRuleta();
+    });
+  }
 
 });
 
@@ -387,6 +411,9 @@ function alTerminarGiro() {
     const mensaje     = generarMensajeWhatsApp(textoPremio);
     botonWA.href      = 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + encodeURIComponent(mensaje);
 
+    /* Guardar el premio en localStorage para bloquear futuros intentos */
+    localStorage.setItem('ruleta_premio_ganado', String(premioGanado));
+
   }, 600);
 }
 
@@ -637,23 +664,13 @@ function crearParticulas() {
 
 
 /* ================================================================
-   ACCESIBILIDAD: Cerrar modal con tecla Escape
+   BLOQUEADO: Escape no cierra el modal
+   El usuario DEBE reclamar su premio por WhatsApp
    ================================================================ */
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
-    const modal = document.getElementById('modal-premio');
-    if (modal && !modal.classList.contains('oculto')) {
-      cerrarModal();
-    }
+    e.preventDefault();
   }
 });
 
-/* ================================================================
-   ACCESIBILIDAD: Cerrar modal haciendo clic fuera de la caja
-   ================================================================ */
-document.getElementById('modal-premio') && document.addEventListener('click', function (e) {
-  const modal = document.getElementById('modal-premio');
-  if (modal && e.target === modal) {
-    cerrarModal();
-  }
-});
+/* Clic fuera del modal: también bloqueado (listener eliminado) */
